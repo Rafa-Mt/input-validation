@@ -68,7 +68,7 @@ const none = new InputComponent({
         }
     },
 })
-document.body.appendChild(none)
+// document.body.appendChild(none)
 
 const createInput = (name) => {
     const checkerCreator = (name) => {
@@ -104,8 +104,8 @@ const createInput = (name) => {
     document.body.appendChild(item)
 }
 
-createInput("empty");
-createInput("integer");
-createInput("float");
-createInput("email")
+// createInput("empty");
+// createInput("integer");
+// createInput("float");
+// createInput("email")
 

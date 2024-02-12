@@ -136,4 +136,5 @@ export default class BaseComponent extends HTMLElement {
             .map((name) => [name.slice(prefix.length), this.getAttribute(name)])
         )
     }
+
 }
