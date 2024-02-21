@@ -2,7 +2,7 @@ import BaseComponent from './BaseNoShadow.js';
 /**
  * @typedef StandardInputComponentProps
  * @property {string?} text
- * @property {Validations?} validations
+ * @property {InputValidations?} validations
  * @property {string?} mismatchmessage
  * @property {string?} emptymessage
  * 
@@ -12,7 +12,6 @@ import BaseComponent from './BaseNoShadow.js';
  */
 
 /**
- * @class StandartInputComponent
  * @extends BaseComponent
  * @param {StandardInputComponentProps} props
  * @property {HTMLInputElement} baseElement

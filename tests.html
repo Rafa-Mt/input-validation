@@ -7,26 +7,13 @@
 </head>
 <body>
     
-    <form action="">
-        <input  id="input-email"  >
-        <button type="submit">Submit</button>
-    </form>
+    <input type="checkbox" name="hola" id="hola">
+    <label for="hola"></label>
 
     <script>
 
-        const myInput = document.getElementById('input-email');
-        myInput.type = 'email';
-        myInput.addEventListener('input', (e) => {
-            if (myInput.validity.valueMissing) {
-                myInput.setCustomValidity("AAA")
-            }
-            if (myInput.validity.typeMismatch) {
-                myInput.setCustomValidity('Please enter a number.');
-            } else {
-                myInput.setCustomValidity('');
-            }
-        }
-        );
+        const box = document.getElementById('hola');
+        box.indeterminate = true;
     </script>
     
 </body>
