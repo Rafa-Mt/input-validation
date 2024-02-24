@@ -86,7 +86,7 @@ export default class BaseComponent extends HTMLElement {
             Object.assign(this.props, { [attr[0]]: attr[1] })
         })
 
-        console.log(this.props)
+
     }
 
     /** 
@@ -152,7 +152,6 @@ export default class BaseComponent extends HTMLElement {
         const result = list.filter((element) => 
             !prefixes.some((prefix) => element.includes(prefix))
         ).map((name) => [name, this.getAttribute(name)])
-        console.log(result)
         return result;
 
         // const filteredArray = array1.filter(value => array2.includes(value));

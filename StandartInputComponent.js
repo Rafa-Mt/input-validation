@@ -23,7 +23,6 @@ export default class StdInput extends BaseComponent {
     constructor(props){
         super(props,'input');
 
-
         
     }
     static validators = {
@@ -38,7 +37,7 @@ export default class StdInput extends BaseComponent {
         },
         real: (element) => {
             element.type = "text"
-            element.pattern = "^\\d+\.*\\d*$";
+            element.pattern = `\\d+\\.*\\d*`;
         }, 
         required: (element) => {
             element.required = true;
@@ -49,8 +48,7 @@ export default class StdInput extends BaseComponent {
          * @param {InputValidations} validations 
          */
     addValidations(validations) {
-
-        this.baseElement.addEventListener("input", (event) => {
+        this.baseElement.addEventListener("input", (e) => {
             if (this.baseElement.validity.valueMissing) {
                 this.baseElement.setCustomValidity(this.props.emptymessage || "Input required");
             } 
@@ -71,7 +69,7 @@ export default class StdInput extends BaseComponent {
     }
     connectedCallback() {
         super.connectedCallback();
-        this.element.placeholder = this.props.text;
+        this.baseElement.placeholder = this.props.text;
 
 
         this.addStyles({

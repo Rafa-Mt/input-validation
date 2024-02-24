@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./InputComponent.js" type="module"></script>
-    <script src="./InputComponent (coupled).js" type="module"></script>
     <script src="./StandartInputComponent.js" type="module"></script>
 </head>
 <body>
     <form action="" id="myForm">
-        <std-input validations="email required" text="Holaa" mismatchmessage="noooo" emptymessage="hola"></std-input>
-        <button id="submitter"type="submit">AAA</button>
+        <std-input
+            validations="real required"
+            text="Este es requerido"
+            emptymessage="no puede estar vacio"
+            mismatchmessage="No es numero"
+        >
+        </std-input>
+        <std-input
+            validations="real required"
+            text="Me requieren"
+            emptymessage="no puede estar vacio"
+            mismatchmessage="No es numero"
+        >
+        </std-input>
+        
+        
+        <button id="submitter"type="submit">Submit</button>
     </form>
-    <script>
-        const submitter = document.getElementById("submitter");
-        submitter.onclick = () => {
-            
-        }
-    </script>
+
 </body>
 </html>
