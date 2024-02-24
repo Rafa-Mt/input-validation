@@ -48,11 +48,15 @@ export default class StdInput extends BaseComponent {
          * @param {InputValidations} validations 
          */
     addValidations(validations) {
-        this.baseElement.addEventListener("input", (e) => {
+        this.baseElement.addEventListener("invalid", (e) => {
             if (this.baseElement.validity.valueMissing) {
                 this.baseElement.setCustomValidity(this.props.emptymessage || "Input required");
-            } 
-            else if (this.baseElement.validity.typeMismatch || this.baseElement.validity.patternMismatch) {
+            }
+        });
+
+        this.baseElement.addEventListener("input", (e) => {
+
+            if (this.baseElement.validity.typeMismatch || this.baseElement.validity.patternMismatch) {
                 this.baseElement.setCustomValidity(this.props.mismatchmessage || "Invalid input");
             } 
             else {

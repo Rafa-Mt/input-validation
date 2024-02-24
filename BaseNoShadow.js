@@ -1,3 +1,7 @@
+// events
+const connectEvent = new CustomEvent("connect")
+
+ 
  /**
  * @typedef {Object} ButtonComponentProps
  * @property {Object} events
@@ -85,6 +89,8 @@ export default class BaseComponent extends HTMLElement {
         .forEach((attr) => {
             Object.assign(this.props, { [attr[0]]: attr[1] })
         })
+
+        this.baseElement.dispatchEvent(connectEvent);
 
 
     }
