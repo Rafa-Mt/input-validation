@@ -1,4 +1,8 @@
-/**
+// events
+const connectEvent = new CustomEvent("connect")
+
+ 
+ /**
  * @typedef {Object} ButtonComponentProps
  * @property {Object} events
  * @property {Object} styles
@@ -32,17 +36,17 @@ export default class BaseComponent extends HTMLElement {
             styles: {},
             classes: [],
             text: "",
-            id: "custom-element"
+            id: "custom-element",
         }, input)
         
         const attributes = this.getAttributeNames();
         
         const events = Object.fromEntries(
-            Object.entries(this.#filterByPrefix(attributes, "@"))
+            Object.entries(this.filterByPrefix(attributes, "@"))
             .map((pair) => [pair[0], window[pair[1]]])
         )
             
-        const styles = this.#filterByPrefix(attributes, "#");
+        const styles = this.filterByPrefix(attributes, "#");
             
         if (Object.keys(events).length != 0)
             Object.assign(props, {events: events})
@@ -50,7 +54,7 @@ export default class BaseComponent extends HTMLElement {
         if (Object.keys(styles).length != 0)
             Object.assign(props, {styles: styles})
 
-        if (this.innerHTML != "") 
+        if (this.innerHTML != "" && props.text == "") 
             Object.assign(props, {text: this.innerHTML})
         
         if (this.id != "")
@@ -60,13 +64,12 @@ export default class BaseComponent extends HTMLElement {
     }
     
     connectedCallback() {
-        this.attachShadow({mode: "open"});
         const styleSheet = document.createElement("style");
-        this.shadowRoot.appendChild(styleSheet);
-
+        this.appendChild(styleSheet);
+        
         this.baseElement = document.createElement(this.#baseType);
         this.baseElement.id = this.props.id;
-        this.shadowRoot.appendChild(this.baseElement);
+        this.appendChild(this.baseElement);
         
         this.addStyles({ // * Default Styles
             display: "flex",
@@ -77,17 +80,26 @@ export default class BaseComponent extends HTMLElement {
             width: "fit-content",
             margin: "2px"
         });
-
+        
         this.addStyles(this.props.styles);
         this.addEvents(this.props.events);
         this.addClasses(...this.props.classes); 
+        
+        this.filterByNotPrefixes(this.getAttributeNames(), "#", "@")
+        .forEach((attr) => {
+            Object.assign(this.props, { [attr[0]]: attr[1] })
+        })
+
+        this.baseElement.dispatchEvent(connectEvent);
+
+
     }
 
     /** 
      * @param {Object} styles 
      */
     addStyles(styles, modifier="") {
-        const styleSheet = this.shadowRoot.querySelector("style");
+        const styleSheet = this.querySelector("style");
         for (let name in styles) {
             if (typeof styles[name] == "object") {
                 this.addStyles(styles[name], name)
@@ -123,7 +135,7 @@ export default class BaseComponent extends HTMLElement {
     }
 
     get element() {
-        return this.shadowRoot.getElementById(this.props.id)
+        return document.getElementById(this.props.id)
     }
 
     /**
@@ -131,11 +143,24 @@ export default class BaseComponent extends HTMLElement {
      * @param {string} prefix 
      * @returns Object
      */
-    #filterByPrefix(list, prefix) {
-        return Object.fromEntries(
+    filterByPrefix(list, prefix) {
+        
+        const res = Object.fromEntries(
             list.filter((element) => element.includes(prefix))
             .map((name) => [name.slice(prefix.length), this.getAttribute(name)])
         )
+
+        return res;
+    }
+
+    filterByNotPrefixes(list, ...prefixes) {
+
+        const result = list.filter((element) => 
+            !prefixes.some((prefix) => element.includes(prefix))
+        ).map((name) => [name, this.getAttribute(name)])
+        return result;
+
+        // const filteredArray = array1.filter(value => array2.includes(value));
     }
 
 }
